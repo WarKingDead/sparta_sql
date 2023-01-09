@@ -26,7 +26,13 @@ group by로 묶으니까 성씨별로 정리가 되고
 count로 갯수 세기를 하라는 쿼리
 
 
+
+select name, count(*) from users
+group by name
 쿼리가 실행되는 순서는: from → group by → select 임 큰것에서부터 작은 것으로 내려가는 방식인듯?
+
+
+
 
 SELECT * FROM users
 ↓
