@@ -1,3 +1,6 @@
+
+쿼리를 직접 여러번 쳐가면서 내용의 의미와 코드를 익혀야
+실무에서 쓸 수 있다구....
 SELECT name FROM users
 ↓
 SELECT name, COUNT(*) FROM users
@@ -7,3 +10,22 @@ users 테이블에서 name 필드의 내용들을 부른 다음에
 ↓
 group by로 묶으니까 성씨별로 정리가 되고
 count로 갯수 세기를 하라는 쿼리
+
+
+
+
+SELECT * FROM users
+↓
+
+SELECT * FROM users 
+WHERE name = "신**"
+
+'신'씨 데이터만 불러와서 갯수는 직접 세기
+
+↓
+
+SELECT name, COUNT(*) FROM users
+GROUP BY name
+
+GROUP BY로 신씨 데이터를 묶어서 COUNT로 몇개인지 갯수보기
+
