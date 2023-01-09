@@ -1,15 +1,15 @@
-
-              쿼리를 직접 여러번 쳐가면서 내용의 의미와 코드를 익혀야
+ 
+ 쿼리를 직접 여러번 쳐가면서 내용의 의미와 코드를 익혀야
               실무에서 쓸 수 있다구....
 
 
-최종 쿼리를 바로 작성해버리는 게 아니고
+실무에서는 테이블의 내용을 파악해가면서 지시를 작성해야하므로
+수업처럼 필드 이름을 알고 있어서 최종 쿼리를 바로 작성해버리는 게 아니고
 테이블 지정 FROM, 필드 선택 SELECT →
 → 테이블, 필드, 지정한 필드 WHERE에서 대상 문자를 지정 →
 → WHERE 날리고 →
 → 테이블, 필드에 COUNT를 추가하면서 GROUP BY로 그룹으로 묶기를
 지시하는 순서로 작성해버릇하자.
-
 
 
 
@@ -50,10 +50,107 @@ GROUP BY로 신씨 데이터를 묶어서 COUNT로 몇개인지 갯수보기
 
 
 
-  ㅣ Q. naver.com 이메일을 쓰는 사람 중에서 '신'씨가 몇명인지 알고 싶을 때는?
+      	l Quize l naver.com 이메일을 쓰는 사람 중에서 '신'씨가 몇명인지 알고 싶을 때는?
   
-  
-  
-  SELECT * FROM checkins LIMIT 10 (너무 많으니까 10개만 불러다 보겠다는 뜻)
-  
-  
+ 
+
+
+      	l QUEST l 주차별 '오늘의 다짐' 개수 구하기
+        
+                      (번외)
+                      SELECT * FROM checkins LIMIT 10 
+                      (너무 많으니까 10개만 불러다가 보겠다는 뜻)
+
+
+
+SELECT * FROM checkins
+GROUP BY week
+-----------------------
+week
+1 
+2 
+3 
+-----------------------
+week에 1 2 3이 있는 것으로보아 1~3주차까지 내용이 있다.
+그럼 주차별로 몇개의 오늘의 다짐이 있는지를 세보자.
+
+SELECT week, COUNT(*) FROM checkins
+GROUP BY week
+-----------------------
+week	COUNT(*)
+1 	96
+2 	29
+3 	9 
+-----------------------
+
+완료! 지만 이게 정말 맞는 내용인지를 노가다로 확인해보자
+
+SELECT * FROM checkins
+WHERE week = 1
+
+1주차만 불러다가 갯수를 대조해보겠다!
+밑에 나오는 필드 갯수 합산 카운트에 나온 숫자를 보니 96개, 맞구만.
+
+
+
+
+동일 범주에서 최소값/최대값/평균값/반올림/합계 찾기
+ROUND (MAX MIN AVG (필드명)) 사용하기
+
+	l QUEST l  주차별 '오늘의 다짐'에 대한 '좋아요' 갯수로 최소대평균을 구하기
+
+SELECT * FROM checkins
+
+SELECT * FROM checkins
+GROUP BY week
+
+
+ 	최소값 구하기 명령-> MAX( )
+SELECT week, MIN(likes) FROM checkins
+GROUP BY week
+-----------------------
+week	MIN(likes)
+1	0
+2	0
+3	1
+-----------------------
+	보아하니 최대면 MAX 겠구만. -> MAX( )
+
+SELECT week, MAX(likes) FROM checkins
+GROUP BY week
+-----------------------
+week	MAX(likes)
+1	4
+2	5
+3	3
+-----------------------
+	평균은 AVERAGE = AVG 이다. -> AVG( )
+SELECT week, AVG(likes) FROM checkins
+GROUP BY week
+-----------------------
+week	AVG(likes)
+1	2.1042
+2	2.1724
+3	1.6667
+-----------------------
+
+	소수점을 보면.. 반올림을 하고 싶은 것이 인지상정 -> ROUND(대상 쿼리문,자릿수)
+	그냥 반올림은 0으로
+SELECT week, ROUND(AVG(likes), 0) FROM checkins
+GROUP BY week
+
+
+SELECT week, ROUND(AVG(likes), 2) FROM checkins <-소수점 포함 2자리 수로 표기하겠다는 뜻.
+GROUP BY week
+-----------------------
+week	ROUND(AVG(likes),2) 
+1	2.10
+2	2.17
+3	1.67
+-----------------------
+
+	합계 구하기 -> SUM( )
+SELECT week, SUM(likes) FROM checkins
+GROUP BY week
+-----------------------
+
