@@ -26,12 +26,10 @@ count로 갯수 세기를 하라는 쿼리
 
 SELECT * FROM users
 ↓
-
 SELECT * FROM users 
 WHERE name = "신**"
 
 '신'씨 데이터만 불러와서 갯수는 직접 세기
-
 ↓
 
 SELECT name, COUNT(*) FROM users
@@ -39,3 +37,12 @@ GROUP BY name
 
 GROUP BY로 신씨 데이터를 묶어서 COUNT로 몇개인지 갯수보기
 
+
+
+
+  ㅣ Q. naver.com 이메일을 쓰는 사람 중에서 '신'씨가 몇명인지 알고 싶을 때는?
+  
+  
+  
+  
+  
