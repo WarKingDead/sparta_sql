@@ -54,5 +54,6 @@ GROUP BY로 신씨 데이터를 묶어서 COUNT로 몇개인지 갯수보기
   
   
   
+  SELECT * FROM checkins LIMIT 10 (너무 많으니까 10개만 불러다 보겠다는 뜻)
   
   
