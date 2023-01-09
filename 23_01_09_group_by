@@ -1,5 +1,9 @@
+SELECT name FROM users
+↓
 SELECT name, COUNT(*) FROM users
 GROUP BY name 
 
-users 테이블에서 name 필드의 내용들을 group by로 성씨별로 묶고
+users 테이블에서 name 필드의 내용들을 부른 다음에
+↓
+group by로 묶으니까 성씨별로 정리가 되고
 count로 갯수 세기를 하라는 쿼리
