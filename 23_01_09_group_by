@@ -79,6 +79,7 @@ GROUP BY로 신씨 데이터를 묶어서 COUNT로 몇개인지 갯수보기
 
 
 	l QUEST l 주차별 '오늘의 다짐' 개수 구하기
+
 (번외)
 SELECT * FROM checkins LIMIT 10 
 (너무 많으니까 10개만 불러다가 보겠다는 뜻)
@@ -93,8 +94,10 @@ week
 2 
 3 
 -----------------------
+
 week에 1 2 3이 있는 것으로보아 1~3주차까지 내용이 있다.
 그럼 주차별로 몇개의 오늘의 다짐이 있는지를 세보자.
+
 
 SELECT week, COUNT(*) FROM checkins
 GROUP BY week
@@ -105,7 +108,9 @@ week	COUNT(*)
 3 	9 
 -----------------------
 
+
 완료! 지만 이게 정말 맞는 내용인지를 노가다로 확인해보자
+
 
 SELECT * FROM checkins
 WHERE week = 1
@@ -127,6 +132,7 @@ SELECT * FROM checkins
 GROUP BY week
 
 
+
  	최소값 구하기 명령-> MAX( )
 SELECT week, MIN(likes) FROM checkins
 GROUP BY week
@@ -136,6 +142,8 @@ week	MIN(likes)
 2	0
 3	1
 -----------------------
+
+
 	보아하니 최대면 MAX 겠구만. -> MAX( )
 
 SELECT week, MAX(likes) FROM checkins
@@ -146,6 +154,8 @@ week	MAX(likes)
 2	5
 3	3
 -----------------------
+
+
 	평균은 AVERAGE = AVG 이다. -> AVG( )
 SELECT week, AVG(likes) FROM checkins
 GROUP BY week
@@ -155,6 +165,7 @@ week	AVG(likes)
 2	2.1724
 3	1.6667
 -----------------------
+
 
 	소수점을 보면.. 반올림을 하고 싶은 것이 인지상정 -> ROUND(대상 쿼리문,자릿수)
 	그냥 반올림은 0으로
@@ -170,6 +181,7 @@ week	ROUND(AVG(likes),2)
 2	2.17
 3	1.67
 -----------------------
+
 
 	합계 구하기 -> SUM( )
 SELECT week, SUM(likes) FROM checkins
@@ -195,13 +207,80 @@ GROUP BY week
 
 
 
-	정렬하기 ->ORDER BY count(필드 이름)
 
+
+
+		정렬하기 ->ORDER BY count(필드 이름)
+
+정렬은 모든 작업을 다 마친 후에 진행한다.
+
+
+		기본적으로 오름차순인데 (ASC인데 생략ok)
 SELECT name, COUNT(*) FROM users u 
 GROUP BY name 
 ORDER BY count(*)
 
 
 
+		내림차순은 DESCENDING = DESC를 붙인다.
+SELECT name, COUNT(*) FROM users
+GROUP BY name 
+ORDER BY count(*) DESC
+
+
+		그룹핑과 정렬 명령은 같이 안써도 됨.
+		정렬은 쓰고 싶을 때 쓰는 거지 뭐
+
+SELECT * FROM checkins
+ORDER BY likes DESC
+
+
+
+
+
+                                                                                                     
+          `8.`888b                 ,8' 8 8888        8 8 8888888888   8 888888888o.   8 8888888888   
+           `8.`888b               ,8'  8 8888        8 8 8888         8 8888    `88.  8 8888         
+            `8.`888b             ,8'   8 8888        8 8 8888         8 8888     `88  8 8888         
+             `8.`888b     .b    ,8'    8 8888        8 8 8888         8 8888     ,88  8 8888         
+              `8.`888b    88b  ,8'     8 8888        8 8 888888888888 8 8888.   ,88'  8 888888888888 
+               `8.`888b .`888b,8'      8 8888        8 8 8888         8 888888888P'   8 8888         
+                `8.`888b8.`8888'       8 8888888888888 8 8888         8 8888`8b       8 8888         
+                 `8.`888`8.`88'        8 8888        8 8 8888         8 8888 `8b.     8 8888         
+                  `8.`8' `8,`'         8 8888        8 8 8888         8 8888   `8b.   8 8888         
+                   `8.`   `8'          8 8888        8 8 888888888888 8 8888     `88. 8 888888888888 
+		   
+		   
+
+
+WHERE와 GROUP ORDER BY 같이 쓰기
+
+
+
+| QUIZE|  웹개발 종합반의 결제수단별 주문건수 세어보기
+ 
+->일단 전체의 결제 수단별 주문건수를 세어보자.
+SELECT payment_method, count(*) FROM orders
+GROUP BY payment_method
+
+
+
+SELECT * FROM orders
+WHERE course_title = '웹개발 종합반'
+GROUP BY payment_method
+
+↓
+
+SELECT payment_method, COUNT(*) FROM orders
+WHERE course_title = '웹개발 종합반'
+GROUP BY payment_method
+
+↓
+
+	오름차순으로 정렬하기는?
+SELECT payment_method, COUNT(*) FROM orders
+WHERE course_title = '웹개발 종합반'
+GROUP BY payment_method 
+ORDER BY COUNT(*) 
 
 
